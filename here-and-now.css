@@ -10,23 +10,23 @@
   height: 100%;
 }
 
-input.100 {
-  width: 100% !important;
-}
-
 .form-container {
 
 }
 
+.btn-100 {
+  width: 100% !important;
+}
+
 .file-upload {
     position: relative;
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 .file-upload input[type=file] {
     position: absolute;
     top: 0;
     right: 0;
-    min-width: 100%;
+    /*min-width: 100%;*/
     /*min-height: 100%;*/
     font-size: 100px;
     text-align: right;
