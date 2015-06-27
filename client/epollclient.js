@@ -165,7 +165,7 @@ if (Meteor.isClient) {
       Session.set('map', true);
     },
 
-    "click .close": function() {
+    "click .js-close": function() {
       console.log('x clicked');
       Session.set('map', true);
     }

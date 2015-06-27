@@ -20,7 +20,7 @@ body {
 	right:30px;
 }
 
-.close {
+.js-close {
   position: absolute;
   right: 0;
   top: 0;
