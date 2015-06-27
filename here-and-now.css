@@ -1,4 +1,8 @@
 /* CSS declarations go here */
+body {
+  background-color: white;
+}
+
 .map-container {
   width: 100%;
   max-width: 100%;
@@ -16,8 +20,16 @@
 	right:30px;
 }
 
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: #F22613;
+}
+
 .form-container {
-  padding-top: 30px;
+  margin-top: 50px;
+  background-color: white;
 }
 
 input {
@@ -46,4 +58,9 @@ input {
     background: white;
     cursor: inherit;
     display: block;
+}
+
+.submit-form {
+  margin-top: 30px;
+  background-color: white;
 }
