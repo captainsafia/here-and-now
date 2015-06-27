@@ -70,8 +70,15 @@ if (Meteor.isClient) {
           var pin = new google.maps.LatLng(markerObject.lat, markerObject.lng);
           var infoContent = "<div id='content'>" +
           '<h1>' + document.name + '</h1><br/>' +
-          '<p>' + document.description + '</p>' +
-          '<p>' + document.time + '</p>';
+          '<p>' + document.description + '</p>';
+
+          if (document.time == "Come Now") {
+            infoContent += "<p> You should come to this event now!</p>";
+          } else if (document.time == "Come Soon") {
+            infoContent += "<p> You should come to this event soon!</p>";
+          } else {
+            infoContent += "<p> You should come to this event someime today!</p>";
+          }
 
           var infoWindow = new google.maps.InfoWindow({
             content: infoContent
