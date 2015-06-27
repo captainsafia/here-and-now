@@ -10,6 +10,12 @@
   height: 100%;
 }
 
+.btn-floating.btn-large.waves-effect.waves-light.red {
+	position:fixed;
+	bottom:0;
+	right:0;
+}
+
 .form-container {
   padding-top: 30px;
 }
