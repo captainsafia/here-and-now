@@ -30,7 +30,7 @@ if (Meteor.isClient) {
   });
 
   Template.map.events({
-    'click .btn-floating.btn-large.waves-effect.waves-light.red': function(){
+    'click .add': function(){
       console.log("You clicked something");
       Session.set('map', false);
     }
