@@ -49,6 +49,7 @@ if (Meteor.isClient) {
           lat: event.latLng.lat(),
           lng: event.latLng.lng()
         });
+        Session.set('map', false);
       });
 
       Markers.find().observe({
@@ -131,6 +132,8 @@ if (Meteor.isClient) {
           console.log(err)
         }
       });
+
+      Session.set('map', true);
     },
 
     "click .close": function() {
