@@ -167,7 +167,7 @@ if (Meteor.isClient) {
       Session.set('map', true);
     },
 
-    "click .close": function() {
+    "click .js-close": function() {
       Session.set('map', true);
     }
   });
