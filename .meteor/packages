@@ -11,3 +11,5 @@ less
 dburles:google-maps
 jquery
 fezvrasta:bootstrap-material-design
+cfs:standard-packages
+cfs:gridfs

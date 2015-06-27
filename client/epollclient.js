@@ -18,6 +18,57 @@ if (Meteor.isClient) {
     GoogleMaps.load();
   });
 
+  var imageStore = new FS.Store.GridFS(“images”);
+
+Images = new FS.Collection(“images”, {
+ stores: [imageStore]
+});
+
+  Images.deny({
+ insert: function(){
+ return false;
+ },
+ update: function(){
+ return false;
+ },
+ remove: function(){
+ return false;
+ },
+ download: function(){
+ return false;
+ }
+ });
+
+Images.allow({
+ insert: function(){
+ return true;
+ },
+ update: function(){
+ return true;
+ },
+ remove: function(){
+ return true;
+ },
+ download: function(){
+ return true;
+ }
+});
+  
+  Meteor.publish(“images”, function(){ return Images.find(); });
+
+  Router.route(‘/profile’,{
+ waitOn: function () {
+ return Meteor.subscribe(‘images’)
+ },
+ action: function () {
+ if (this.ready())
+ this.render(‘Profile’);
+ else
+ this.render(‘Loading’);
+ }
+});
+
+  
   Markers = new Mongo.Collection("markers");
 
   Template.map.helpers({
