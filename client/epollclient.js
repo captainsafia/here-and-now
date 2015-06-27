@@ -75,7 +75,9 @@ if (Meteor.isClient) {
         if (err) {
           console.log(err)
         }
-      });
+      })
+
+    }, 
 
     "click .btn.btn-danger.btn-small": function() {
         console.log('x clicked');
