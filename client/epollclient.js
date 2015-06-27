@@ -1,4 +1,19 @@
+AllEvents = new Mongo.Collection("form")
+
 if (Meteor.isClient) {
+  Session.setDefault('map', true);
+
+  UI.body.helpers({
+      showMap: function(){
+          return Session.get('map');
+      }
+  });
+
+  Meteor.startup(function(){
+    $.material.init()
+    GoogleMaps.load();
+  });
+
   Meteor.startup(function() {
     GoogleMaps.load();
   });
@@ -11,6 +26,13 @@ if (Meteor.isClient) {
           zoom: 18
         };
       }
+    }
+  });
+
+  Template.map.events({
+    'click .btn-floating.btn-large.waves-effect.waves-light.red': function(){
+      console.log("You clicked something");
+      Session.set('map', false);
     }
   });
 
@@ -38,6 +60,28 @@ if (Meteor.isClient) {
         $("span#has-photo").addClass("hidden");
         $("span#no-photo").removeClass("hidden");
       }
+    },
+
+    'click .btn.btn-danger.btn-small': function() {
+        console.log('x clicked');
+        Session.set('map', true);
     }
-  })
+  });
+
+  Template.form.events({'submit form' : function(event, template) {
+    event.preventDefault();
+
+    name = template.find("input[name=name]");
+    description = template.find("input[name=description");
+    
+    var data = {
+      name: name.value,
+      description: description.value
+    };
+
+    name.value="";
+    description.value=""
+
+    AllEvents.insert(data);
+  }});
 }
