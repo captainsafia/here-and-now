@@ -11,7 +11,11 @@
 }
 
 .form-container {
+  padding-top: 30px;
+}
 
+input {
+  border: none !important;
 }
 
 .btn-100 {
