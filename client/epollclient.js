@@ -1,3 +1,5 @@
+AllEvents = new Mongo.Collection("form")
+
 if (Meteor.isClient) {
   Meteor.startup(function() {
     GoogleMaps.load();
@@ -39,5 +41,22 @@ if (Meteor.isClient) {
         $("span#no-photo").removeClass("hidden");
       }
     }
-  })
+  });
+
+  Template.form.events({'submit form' : function(event, template) {
+    event.preventDefault();
+
+    name = template.find("input[name=name]");
+    description = template.find("input[name=description");
+    
+    var data = {
+      name: name.value,
+      description: description.value
+    };
+
+    name.value="";
+    description.value=""
+
+    AllEvents.insert(data);
+  }});
 }
