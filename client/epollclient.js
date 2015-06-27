@@ -81,4 +81,16 @@ if (Meteor.isClient) {
       });
     });
   });
+
+  Template.form.events({
+    "change #photo-upload": function(event, template) {
+      if ($("#photo-upload").val() != "") {
+        $("span#no-photo").addClass("hidden");
+        $("span#has-photo").removeClass("hidden");
+      } else {
+        $("span#has-photo").addClass("hidden");
+        $("span#no-photo").removeClass("hidden");
+      }
+    }
+  })
 }
