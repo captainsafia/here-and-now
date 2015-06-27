@@ -8,6 +8,6 @@ meteor-platform
 autopublish
 insecure
 less
-bootstrap-themes
 dburles:google-maps
 jquery
+fezvrasta:bootstrap-material-design
