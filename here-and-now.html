@@ -4,9 +4,9 @@
 </head>
 
 <body>
-  {{> map}}
-
-
-  <!-- {{> form}} -->
-
+  {{#if showMap}}
+    {{> map}} 
+ {{else}}
+    {{> form}} 
+  {{/if}}
 </body>
