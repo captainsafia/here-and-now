@@ -4,9 +4,9 @@ if (Meteor.isClient) {
   Session.setDefault('map', true);
 
   UI.body.helpers({
-      showMap: function(){
-          return Session.get('map');
-      }
+    showMap: function(){
+      return Session.get('map');
+    }
   });
 
   Meteor.startup(function(){
@@ -48,11 +48,15 @@ if (Meteor.isClient) {
         Markers.insert({
           lat: event.latLng.lat(),
           lng: event.latLng.lng()
+        }, function(error, id) {
+          if (!error) {
+            Session.set('map', false);
+            Session.set('sessionMarker', id)
+          }
         });
-        Session.set('map', false);
       });
 
-      Markers.find().observe({
+      AllEvents.find().observe({
         /*
         * When a Marker element is added to the Collection, create
         * a Marker DOM obect for it using the Google Maps API and
@@ -61,13 +65,24 @@ if (Meteor.isClient) {
         * Marker elements that we have on the front-end.
         */
         added: function(document) {
-          var pin = new google.maps.LatLng(document.lat, document.lng);
+          console.log(document);
+          var markerObject = Markers.findOne({"_id": document.markerRef})
+          var pin = new google.maps.LatLng(markerObject.lat, markerObject.lng);
+          var infoContent = "<div id='content'>" +
+          '<h1>' + document.name + '</h1><br/>' +
+          '<p>' + document.description + '</p>' +
+          '<p>' + document.time + '</p>';
+
+          var infoWindow = new google.maps.InfoWindow({
+            content: infoContent
+          });
+
           var marker = new google.maps.Marker({
             draggable: true,
             animation: google.maps.Animation.DROP,
             position: pin,
             map: map.instance,
-            id: document._id
+            id: document.markerRef._id
           });
 
           google.maps.event.addListener(marker, "dragend", function(event) {
@@ -78,9 +93,15 @@ if (Meteor.isClient) {
               }
             });
           });
-          markers[document._id] = marker;
-        },
 
+          google.maps.event.addListener(marker, "click", function(event) {
+            infoWindow.open(map.instance, marker);
+          });
+          markers[document._id] = marker;
+        }
+      });
+
+      Markers.find().observe({
         /*
         * When a Marker element is updated in the collection, get the corresponding
         * DOM element in the front-end and change its position.
@@ -122,7 +143,8 @@ if (Meteor.isClient) {
         name: $("input#name").val(),
         description: $("textarea#description").val(),
         time: $("select#time").val(),
-        submitted_at: new Date()
+        submitted_at: new Date(),
+        markerRef: Session.get("sessionMarker")
       };
 
       console.log(data);
@@ -137,8 +159,8 @@ if (Meteor.isClient) {
     },
 
     "click .close": function() {
-        console.log('x clicked');
-        Session.set('map', true);
+      console.log('x clicked');
+      Session.set('map', true);
     }
   });
 }
