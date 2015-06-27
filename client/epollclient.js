@@ -1,3 +1,5 @@
+AllEvents = new Mongo.Collection("form")
+
 if (Meteor.isClient) {
   Session.setDefault('map', true);
 
@@ -64,6 +66,22 @@ if (Meteor.isClient) {
         console.log('x clicked');
         Session.set('map', true);
     }
+  });
 
-  })
+  Template.form.events({'submit form' : function(event, template) {
+    event.preventDefault();
+
+    name = template.find("input[name=name]");
+    description = template.find("input[name=description");
+    
+    var data = {
+      name: name.value,
+      description: description.value
+    };
+
+    name.value="";
+    description.value=""
+
+    AllEvents.insert(data);
+  }});
 }
