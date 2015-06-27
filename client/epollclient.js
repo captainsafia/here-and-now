@@ -1,4 +1,4 @@
-AllEvents = new Mongo.Collection("form")
+AllEvents = new Mongo.Collection("form");
 
 if (Meteor.isClient) {
   Session.setDefault('map', true);
@@ -61,27 +61,25 @@ if (Meteor.isClient) {
         $("span#no-photo").removeClass("hidden");
       }
     },
+    "submit form": function(event, template) {
+      event.preventDefault();
 
-    'click .btn.btn-danger.btn-small': function() {
+      var data = {
+        name: $("input#name").val(),
+        description: $("textarea#description").val(),
+        time: $("select#time").val(),
+        submitted_at: new Date()
+      };
+
+      AllEvents.insert(data, function(err) {
+        if (err) {
+          console.log(err)
+        }
+      });
+
+    "click .btn.btn-danger.btn-small": function() {
         console.log('x clicked');
         Session.set('map', true);
     }
   });
-
-  Template.form.events({'submit form' : function(event, template) {
-    event.preventDefault();
-
-    name = template.find("input[name=name]");
-    description = template.find("input[name=description");
-    
-    var data = {
-      name: name.value,
-      description: description.value
-    };
-
-    name.value="";
-    description.value=""
-
-    AllEvents.insert(data);
-  }});
 }
