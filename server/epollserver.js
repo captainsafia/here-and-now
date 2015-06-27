@@ -1,5 +1,5 @@
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    // code to run on server at startup
+    AllEvents = new Mongo.Collection("form");
   });
 }

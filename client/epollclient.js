@@ -1,4 +1,4 @@
-AllEvents = new Mongo.Collection("form")
+AllEvents = new Mongo.Collection("form");
 
 if (Meteor.isClient) {
   Meteor.startup(function() {
@@ -40,23 +40,22 @@ if (Meteor.isClient) {
         $("span#has-photo").addClass("hidden");
         $("span#no-photo").removeClass("hidden");
       }
+    },
+    "submit form": function(event, template) {
+      event.preventDefault();
+
+      var data = {
+        name: $("input#name").val(),
+        description: $("textarea#description").val(),
+        time: $("select#time").val(),
+        submitted_at: new Date()
+      };
+
+      AllEvents.insert(data, function(err) {
+        if (err) {
+          console.log(err)
+        }
+      });
     }
   });
-
-  Template.form.events({'submit form' : function(event, template) {
-    event.preventDefault();
-
-    name = template.find("input[name=name]");
-    description = template.find("input[name=description");
-    
-    var data = {
-      name: name.value,
-      description: description.value
-    };
-
-    name.value="";
-    description.value=""
-
-    AllEvents.insert(data);
-  }});
 }
