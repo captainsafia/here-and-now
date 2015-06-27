@@ -34,6 +34,7 @@ body {
 
 input {
   border: none !important;
+  font-size: 36px;
 }
 
 .btn-100 {
