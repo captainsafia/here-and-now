@@ -2,29 +2,31 @@
   <div class="container form-container">
     <div class="row">
       <div class="col-xs-9">
-        <h3>Add Event</h3>
+        <h1>Add Event</h1>
       </div>
       <div class="col-xs-3 pull-right">
-        <button class="btn btn-danger btn-small"><i class="mdi-navigation-close"></i></button>
+        <button class="btn btn-danger btn-fab btn-raised mdi-content-clear close"></button>
       </div>
     </div>
-    <form>
+    <form class="submit-form">
       <div class="form-group row">
         <div class="col-xs-12">
-          <input type="text" name="name" id="name" class="form-control" placeholder="what is the event?" />
+          <input type="text" name="name" id="name" class="form-control" placeholder="What is the event?" />
+        </div>
+      </div>
+      <br/>
+      <div class="form-group row">
+        <div class="col-xs-12">
+          <textarea type="text" name="description" id="description" class="form-control" placeholder="Tell us more!" rows="5"></textarea>
         </div>
       </div>
       <div class="form-group row">
-        <div class="col-xs-12">
-          <textarea type="text" name="description" id="description" class="form-control 100" placeholder="tell us more!"></textarea>
-        </div>
-      </div>
-      <div class="form-group row">
+        <label for="time">When should everyone be there?</label>
         <div class="col-xs-12">
           <select class="form-control" name="time" id="time">
-            <option>come now</option>
-            <option>come soon</option>
-            <option>come today</option>
+            <option>Come Now</option>
+            <option>Come Soon</option>
+            <option>Come Today</option>
           </select>
         </div>
       </div>

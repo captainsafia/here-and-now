@@ -115,7 +115,7 @@ if (Meteor.isClient) {
       }
     },
 
-    'click .btn.btn-danger.btn-small': function() {
+    'click .close': function() {
         console.log('x clicked');
         Session.set('map', true);
     }
@@ -126,7 +126,7 @@ if (Meteor.isClient) {
 
     name = template.find("input[name=name]");
     description = template.find("input[name=description");
-    
+
     var data = {
       name: name.value,
       description: description.value
