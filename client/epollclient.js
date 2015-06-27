@@ -45,6 +45,7 @@ if (Meteor.isClient) {
       google.maps.event.addListener(map.instance, "click", function(event) {
         console.log(event);
         // Insert location where the pin was dropped into the Markers collection
+        Meteor.subscribe('markers');
         Markers.insert({
           lat: event.latLng.lat(),
           lng: event.latLng.lng()
@@ -156,6 +157,7 @@ if (Meteor.isClient) {
 
       console.log(data);
 
+      Meteor.subscribe('form');
       AllEvents.insert(data, function(err) {
         if (err) {
           console.log(err)
@@ -166,7 +168,6 @@ if (Meteor.isClient) {
     },
 
     "click .close": function() {
-      console.log('x clicked');
       Session.set('map', true);
     }
   });
