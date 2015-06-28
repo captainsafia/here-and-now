@@ -1,6 +1,20 @@
 AllEvents = new Mongo.Collection("form");
 
 if (Meteor.isClient) {
+
+  var encodeBase64 = function(file, callback) {
+    var reader = new FileReader();
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      console.error("There was an issue encoding the image!");
+    }
+
+    reader.onloadend = function() {
+      callback(reader.result);
+    }
+  }
+
   Session.setDefault('map', true);
 
   UI.body.helpers({
@@ -51,7 +65,7 @@ if (Meteor.isClient) {
         }, function(error, id) {
           if (!error) {
             Session.set('map', false);
-            Session.set('sessionMarker', id)
+            Session.set('sessionMarker', id);
           }
         });
       });
@@ -70,7 +84,8 @@ if (Meteor.isClient) {
           var pin = new google.maps.LatLng(markerObject.lat, markerObject.lng);
           var infoContent = "<div id='content'>" +
           '<h1>' + document.name + '</h1><br/>' +
-          '<p>' + document.description + '</p>';
+          '<p>' + document.description + '</p>' + 
+          '<img width = "50%" src="' + document.image + '"/>' ;
 
           if (document.time == "Come Now") {
             infoContent += "<p> You should come to this event now!</p>";
@@ -133,8 +148,24 @@ if (Meteor.isClient) {
     });
   });
 
+  var imgURL;
   Template.form.events({
     "change #photo-upload": function(event, template) {
+      var file = event.currentTarget.files[0];
+      console.log(file);
+      var key = "735346c90a8ab2a";
+      encodeBase64(file, function(img) {
+      console.log("img: " + img);
+
+      Imgur.upload({apiKey: key, image: img}, function(error, data) { 
+        if (error) {
+          console.log(error);
+        } else {
+          imgURL = data.link;
+          console.log(imgURL)
+        }
+      });
+
       if ($("#photo-upload").val() != "") {
         $("span#no-photo").addClass("hidden");
         $("span#has-photo").removeClass("hidden");
@@ -142,6 +173,7 @@ if (Meteor.isClient) {
         $("span#has-photo").addClass("hidden");
         $("span#no-photo").removeClass("hidden");
       }
+      })
     },
 
     "submit form": function(event, template) {
@@ -151,6 +183,7 @@ if (Meteor.isClient) {
         description: $("textarea#description").val(),
         time: $("select#time").val(),
         submitted_at: new Date(),
+        image: imgURL,
         markerRef: Session.get("sessionMarker")
       };
 
@@ -171,3 +204,4 @@ if (Meteor.isClient) {
     }
   });
 }
+
